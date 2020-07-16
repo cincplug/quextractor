@@ -3,8 +3,10 @@ const { REACT_APP_TARGET_URL, REACT_APP_PROXY_URL } = process.env;
 const parseHtml = (str) => {
   var parser = new DOMParser();
   var doc = parser.parseFromString(str, "text/html");
-  return Object.values(doc.querySelectorAll("tr")).map((row) =>
-    Object.values(row.querySelectorAll("td")).map((cell) => cell.innerHTML)
+  return Object.values(doc.querySelectorAll("tr")).map((row, rowIndex) =>
+    Object.values(row.querySelectorAll("td")).map((cell) => {
+      return { content: cell.innerHTML, rowIndex };
+    })
   );
 };
 const fetchSourceHtml = () => {

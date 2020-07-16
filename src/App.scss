@@ -3,6 +3,10 @@ $color-main: #223344;
 $color-bg: #f8f8f8;
 $color-item: #ddeeff;
 
+* {
+  margin: 0;
+}
+
 .trening {
   display: grid;
   grid-gap: $gutter;
@@ -14,14 +18,24 @@ $color-item: #ddeeff;
     display: flex;
     justify-content: center;
     padding: $gutter;
+    position: relative;
   }
   &__main {
     display: grid;
     grid-gap: $gutter;
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: 1fr 2fr;
   }
   &__item {
     background: $color-item;
     padding: $gutter;
   }
+  &__score {
+    position: absolute;
+    top: $gutter;
+    right: $gutter;
+  }
+}
+
+.hidden {
+  visibility: hidden;
 }
