@@ -12,7 +12,12 @@ class App extends React.Component {
 
   componentDidMount() {
     TreningApi.fetchSourceHtml().then((response) => {
-      this.setState({ content: TreningApi.parseHtml(response) });
+      const responseCoupled = TreningApi.parseHtml(response);
+      const responseUncoupled = [];
+      for (let [entry, definition] of responseCoupled) {
+        responseUncoupled.push(entry, definition);
+      }
+      this.setState({ content: responseUncoupled });
     });
   }
 
@@ -24,10 +29,9 @@ class App extends React.Component {
         <header className="trening__header">Trening</header>
         <main className="trening__main">
           {content && content.length ? (
-            content.map(([entry, definition], index) => (
+            content.map((item, index) => (
               <div className="trening__item" key={index}>
-                <div className="trening__entry">{entry}</div>
-                <div className="trening__definition">{definition}</div>
+                <div className="trening__entry">{item}</div>
               </div>
             ))
           ) : (
