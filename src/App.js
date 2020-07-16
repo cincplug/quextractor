@@ -12,10 +12,7 @@ class App extends React.Component {
 
   componentDidMount() {
     TreningApi.fetchSourceHtml().then((response) => {
-      const responseCoupled = TreningApi.parseHtml(response);
-      const responseUncoupled = responseCoupled.map(([entry, definition]) => {
-        return entry, definition;
-      });
+      const responseUncoupled = TreningApi.parseHtml(response).flat();
       this.setState({ content: responseUncoupled });
     });
   }
