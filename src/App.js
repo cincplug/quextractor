@@ -8,6 +8,7 @@ class App extends React.Component {
     this.state = {
       content: [],
     };
+    this.dragElement = null;
   }
 
   componentDidMount() {
@@ -15,6 +16,20 @@ class App extends React.Component {
       const responseUncoupled = TreningApi.parseHtml(response).flat();
       this.setState({ content: responseUncoupled });
     });
+  }
+
+  handleDragStart(e) {
+    this.dragElement = e.target;
+  }
+
+  handleDragOver(e) {
+    e.preventDefault();
+  }
+
+  handleDrop(e) {
+    e.preventDefault();
+    this.dragElement.parentNode.removeChild(this.dragElement);
+    e.target.appendChild(this.dragElement);
   }
 
   render() {
@@ -26,8 +41,15 @@ class App extends React.Component {
         <main className="trening__main">
           {content && content.length ? (
             content.map((item, index) => (
-              <div className="trening__item" key={index}>
-                <div className="trening__entry">{item}</div>
+              <div
+                draggable
+                className="trening__item"
+                key={index}
+                onDragStart={(e) => this.handleDragStart(e)}
+                onDragOver={(e) => this.handleDragOver(e)}
+                onDrop={(e) => this.handleDrop(e)}
+              >
+                {item}
               </div>
             ))
           ) : (
