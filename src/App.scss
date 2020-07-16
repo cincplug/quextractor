@@ -1,0 +1,27 @@
+$gutter: 20px;
+$color-main: #223344;
+$color-bg: #f8f8f8;
+$color-item: #ddeeff;
+
+.trening {
+  display: grid;
+  grid-gap: $gutter;
+  padding: $gutter;
+  grid-template-columns: 1fr;
+  &__header {
+    background: $color-main;
+    color: $color-bg;
+    display: flex;
+    justify-content: center;
+    padding: $gutter;
+  }
+  &__main {
+    display: grid;
+    grid-gap: $gutter;
+    grid-template-columns: 1fr 1fr;
+  }
+  &__item {
+    background: $color-item;
+    padding: $gutter;
+  }
+}
