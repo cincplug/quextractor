@@ -1,4 +1,5 @@
 import React from "react";
+import TreningApi from "./TreningApi";
 import "./App.scss";
 
 class App extends React.Component {
@@ -10,39 +11,8 @@ class App extends React.Component {
   }
 
   componentDidMount() {
-    this.fetchSourceHtml().then((k) => {
-      this.setState({ content: this.parseHtml(k) });
-    });
-  }
-
-  parseHtml(str) {
-    var parser = new DOMParser();
-    var doc = parser.parseFromString(str, "text/html");
-    return Object.values(doc.querySelectorAll("tr")).map((row) =>
-      Object.values(row.querySelectorAll("td")).map((cell) => cell.innerHTML)
-    );
-  }
-  fetchSourceHtml() {
-    return new Promise((resolve, reject) => {
-      fetch("https://skoda-laura.herokuapp.com", {
-        method: "GET",
-        mode: "cors",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: "Basic",
-          "Target-URL": `https://docs.microsoft.com/en-us/learn/modules/welcome-to-azure/3-tour-of-azure-services`,
-        },
-        body: null,
-      })
-        .then((response) => {
-          return response.text();
-        })
-        .then((responseText) => {
-          resolve(responseText);
-        })
-        .catch((error) => {
-          reject(error);
-        });
+    TreningApi.fetchSourceHtml().then((response) => {
+      this.setState({ content: TreningApi.parseHtml(response) });
     });
   }
 
