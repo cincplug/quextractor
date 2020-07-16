@@ -39,3 +39,7 @@ $color-item: #ddeeff;
 .hidden {
   visibility: hidden;
 }
+
+.over {
+  box-shadow: 0 $gutter / 2 $gutter rgba($color-main, 0.3);
+}

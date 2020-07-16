@@ -26,6 +26,16 @@ class App extends React.Component {
     // this.dragElement.classList.add("hidden");
   }
 
+  handleDragEnter(e) {
+    this.dragElement = e.target;
+    this.dragElement.classList.add("over");
+  }
+
+  handleDragLeave(e) {
+    this.dragElement = e.target;
+    this.dragElement.classList.remove("over");
+  }
+
   handleDragOver(e) {
     e.preventDefault();
   }
@@ -63,6 +73,8 @@ class App extends React.Component {
                 key={index}
                 onDragStart={(e) => this.handleDragStart(e)}
                 onDragOver={(e) => this.handleDragOver(e)}
+                onDragEnter={(e) => this.handleDragEnter(e)}
+                onDragLeave={(e) => this.handleDragLeave(e)}
                 onDrop={(e) => this.handleDrop(e)}
                 data-row-index={item.rowIndex}
               >
