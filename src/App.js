@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from "react";
+import React, { useState, useEffect } from "react";
 import { DndProvider } from "react-dnd";
 import { HTML5Backend } from "react-dnd-html5-backend";
 import TreningApi from "./TreningApi";
@@ -20,10 +20,9 @@ export const App = () => {
     });
   });
 
-  const handleDrop = useCallback((index, item) => {
-    const { text, rowIndex } = item;
-    console.warn(text, rowIndex);
-  }, []);
+  function onMatch(rowIndex) {
+    console.warn(`Matched ${rowIndex}`);
+  }
 
   return (
     <DndProvider backend={HTML5Backend}>
@@ -47,7 +46,7 @@ export const App = () => {
                   rowIndex={item.rowIndex}
                   text={item.content}
                   accepts={ItemTypes.CARD}
-                  onDrop={(item) => handleDrop(index, item)}
+                  onMatch={(rowIndex) => onMatch(rowIndex)}
                 />
               )
             )

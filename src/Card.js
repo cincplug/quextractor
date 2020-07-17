@@ -3,7 +3,7 @@ import { useDrag } from "react-dnd";
 import "./App.scss";
 
 export const Card = ({ text, type, rowIndex }) => {
-  const [{ isDragging }, drag] = useDrag({
+  const [{ isDragging }, dragRef] = useDrag({
     item: { text, type, rowIndex },
     isDragging(monitor) {
       const item = monitor.getItem();
@@ -13,10 +13,11 @@ export const Card = ({ text, type, rowIndex }) => {
       isDragging: monitor.isDragging(),
     }),
   });
+
   const statusClassName = isDragging ? "dragging" : "default";
   return (
     <div
-      ref={drag}
+      ref={dragRef}
       className={`trening__item trening__item--card trening__item--status-${statusClassName}`}
     >
       {text}

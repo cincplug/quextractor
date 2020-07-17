@@ -2,18 +2,27 @@ import React from "react";
 import { useDrop } from "react-dnd";
 import "./App.scss";
 
-export const Box = ({ text, accepts: accept, onDrop }) => {
-  const [{ isOver, canDrop }, drop] = useDrop({
+export const Box = ({ text, accepts: accept, onMatch }) => {
+  const [{ isOver, canDrop }, dropRef] = useDrop({
     accept,
     collect: (monitor) => ({
       isOver: monitor.isOver(),
       canDrop: monitor.canDrop(),
+      didDrop: monitor.didDrop(),
+      getDropResult: monitor.getDropResult(),
     }),
-    drop: onDrop,
+    drop: handleDrop,
   });
+  function handleDrop(i, j) {
+    const { rowIndex } = i;
+    const dropId = parseInt(j.targetId.slice(1));
+    if (rowIndex * 2 - 1 === dropId) {
+      onMatch(rowIndex);
+    }
+  }
   return (
     <div
-      ref={drop}
+      ref={dropRef}
       className={`trening__item trening__item--box ${canDrop && "can-drop"} ${
         isOver && "is-over"
       }`}
@@ -22,32 +31,3 @@ export const Box = ({ text, accepts: accept, onDrop }) => {
     </div>
   );
 };
-
-// export const Dustbin = ({ lastDroppedItem, accepts: accept, onDrop }) => {
-//     const [{ isOver, canDrop }, drop] = useDrop({
-//       accept,
-//       collect: (monitor) => ({
-//         isOver: monitor.isOver(),
-//         canDrop: monitor.canDrop(),
-//       }),
-//       drop: (item) => onDrop(item),
-//     })
-//     const isActive = isOver && canDrop
-//     let backgroundColor = '#222'
-//     if (isActive) {
-//       backgroundColor = 'darkgreen'
-//     } else if (canDrop) {
-//       backgroundColor = 'darkkhaki'
-//     }
-//     return (
-//       <div ref={drop} style={{ ...style, backgroundColor }}>
-//         {isActive
-//           ? 'Release to drop'
-//           : `This dustbin accepts: ${accept.join(', ')}`}
-
-//         {lastDroppedItem && (
-//           <p>Last dropped: {JSON.stringify(lastDroppedItem)}</p>
-//         )}
-//       </div>
-//     )
-//   }
