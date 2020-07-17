@@ -18,10 +18,11 @@ export const App = () => {
       setCouples(responseParsed.length);
       setContent(responseParsed.flat());
     });
-  });
+  }, []);
 
   function onMatch(rowIndex) {
-    console.warn(`Matched ${rowIndex}`);
+    setContent(content.filter((item) => item.rowIndex !== rowIndex));
+    setCouples(couples - 1);
   }
 
   return (
