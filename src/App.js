@@ -11,6 +11,7 @@ import "./App.scss";
 export const App = () => {
   const [content, setContent] = useState([]);
   const [couples, setCouples] = useState(0);
+  const [dragSource, setDragSource] = useState(-1);
 
   useEffect(() => {
     TreningApi.fetchSourceHtml().then((response) => {
@@ -20,9 +21,13 @@ export const App = () => {
     });
   }, []);
 
-  function onMatch(rowIndex) {
+  function handleMatch(rowIndex) {
     setContent(content.filter((item) => item.rowIndex !== rowIndex));
     setCouples(couples - 1);
+  }
+
+  function handleDragBegin(rowIndex) {
+    setDragSource(rowIndex);
   }
 
   return (
@@ -40,6 +45,7 @@ export const App = () => {
                   rowIndex={item.rowIndex}
                   text={item.content}
                   type={ItemTypes.CARD}
+                  handleDragBegin={handleDragBegin}
                 />
               ) : (
                 <Box
@@ -47,7 +53,8 @@ export const App = () => {
                   rowIndex={item.rowIndex}
                   text={item.content}
                   accepts={ItemTypes.CARD}
-                  onMatch={(rowIndex) => onMatch(rowIndex)}
+                  handleMatch={handleMatch}
+                  dragSource={dragSource}
                 />
               )
             )

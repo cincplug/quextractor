@@ -2,7 +2,13 @@ import React from "react";
 import { useDrop } from "react-dnd";
 import "./App.scss";
 
-export const Box = ({ text, accepts: accept, onMatch }) => {
+export const Box = ({
+  text,
+  accepts: accept,
+  handleMatch,
+  rowIndex,
+  dragSource,
+}) => {
   const [{ isOver, canDrop }, dropRef] = useDrop({
     accept,
     collect: (monitor) => ({
@@ -11,21 +17,19 @@ export const Box = ({ text, accepts: accept, onMatch }) => {
       didDrop: monitor.didDrop(),
       getDropResult: monitor.getDropResult(),
     }),
-    drop: handleDrop,
+    drop: () => handleDrop(rowIndex),
   });
-  function handleDrop(i, j) {
-    const { rowIndex } = i;
-    const dropId = parseInt(j.targetId.slice(1));
-    if (rowIndex * 2 - 1 === dropId) {
-      onMatch(rowIndex);
+  function handleDrop(rowIndex) {
+    if (rowIndex === dragSource) {
+      handleMatch(rowIndex);
     }
   }
   return (
     <div
       ref={dropRef}
-      className={`trening__item trening__item--box ${canDrop && "can-drop"} ${
-        isOver && "is-over"
-      }`}
+      className={`trening__item trening__item--box trening__item--${
+        canDrop ? "can-drop" : "cant-drop"
+      } trening__item--${isOver ? "hovered" : "not-hovered"}`}
     >
       {text}
     </div>

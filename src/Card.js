@@ -2,12 +2,15 @@ import React from "react";
 import { useDrag } from "react-dnd";
 import "./App.scss";
 
-export const Card = ({ text, type, rowIndex }) => {
+export const Card = ({ text, type, rowIndex, handleDragBegin }) => {
   const [{ isDragging }, dragRef] = useDrag({
-    item: { text, type, rowIndex },
-    isDragging(monitor) {
-      const item = monitor.getItem();
-      return text === item.text;
+    item: { rowIndex, type },
+    // isDragging(monitor) {
+    //   const item = monitor.getItem();
+    //   return text === item.text;
+    // },
+    begin: () => {
+      handleDragBegin(rowIndex);
     },
     collect: (monitor) => ({
       isDragging: monitor.isDragging(),
@@ -18,7 +21,7 @@ export const Card = ({ text, type, rowIndex }) => {
   return (
     <div
       ref={dragRef}
-      className={`trening__item trening__item--card trening__item--status-${statusClassName}`}
+      className={`trening__item trening__item--card trening__item--${statusClassName}`}
     >
       {text}
     </div>

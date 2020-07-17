@@ -3,6 +3,11 @@ $color-main: #223344;
 $color-bg: #f8f8f8;
 $color-item: #ddeeff;
 $color-drop: #ffeedd;
+$default-duration: 0.3s;
+$default-easing: ease-out;
+@mixin default-transition($property: transform) {
+  transition: $property $default-duration $default-easing;
+}
 
 * {
   margin: 0;
@@ -32,10 +37,13 @@ $color-drop: #ffeedd;
     &--box {
       background: $color-drop;
     }
-    transition: transform 0.2s ease-out;
-    &--status-dragging {
-      // box-shadow: 0 0 $gutter rgba($color-main, 0.3);
+    &--dragging {
+      @include default-transition;
       transform: scale(0);
+    }
+    &--hovered {
+      @include default-transition;
+      transform: scale(1.05);
     }
   }
   &__score {
@@ -43,19 +51,4 @@ $color-drop: #ffeedd;
     top: $gutter;
     right: $gutter;
   }
-}
-
-.is-over {
-  transform: scale(1.1);
-}
-.can-drop {
-  opacity: 0.8;
-}
-
-.hidden {
-  visibility: hidden;
-}
-
-.over {
-  box-shadow: 0 $gutter / 2 $gutter rgba($color-main, 0.3);
 }
