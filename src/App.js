@@ -1,93 +1,63 @@
-import React from "react";
+import React, { useState, useEffect, useCallback } from "react";
+import { DndProvider } from "react-dnd";
+import { HTML5Backend } from "react-dnd-html5-backend";
 import TreningApi from "./TreningApi";
+import { Card } from "./Card";
+import { Box } from "./Box";
+import { ItemTypes } from "./ItemTypes";
+
 import "./App.scss";
 
-class App extends React.Component {
-  constructor() {
-    super();
-    this.state = {
-      content: [],
-    };
-    this.dragElement = null;
-  }
+export const App = () => {
+  const [content, setContent] = useState([]);
+  const [couples, setCouples] = useState(0);
 
-  componentDidMount() {
+  useEffect(() => {
     TreningApi.fetchSourceHtml().then((response) => {
       const responseParsed = TreningApi.parseHtml(response);
-      this.setState({
-        couples: responseParsed.length,
-        content: responseParsed.flat(),
-      });
+      setCouples(responseParsed.length);
+      setContent(responseParsed.flat());
     });
-  }
+  });
 
-  handleDragStart(e) {
-    this.dragElement = e.target;
-    // this.dragElement.classList.add("hidden");
-  }
+  const handleDrop = useCallback((index, item) => {
+    const { text } = item;
+    console.warn(text);
+  }, []);
 
-  handleDragEnter(e) {
-    this.dragElement = e.target;
-    this.dragElement.classList.add("over");
-  }
-
-  handleDragLeave(e) {
-    this.dragElement = e.target;
-    this.dragElement.classList.remove("over");
-  }
-
-  handleDragOver(e) {
-    e.preventDefault();
-  }
-
-  handleDrop(e) {
-    e.preventDefault();
-    if (this.dragElement.dataset.rowIndex === e.target.dataset.rowIndex) {
-      const k = document.createElement("h4");
-      k.innerHTML = this.dragElement.innerHTML;
-      e.target.prepend(k);
-      this.dragElement.innerHTML = "";
-      this.dragElement.classList.add("hidden");
-      this.setState((state) => {
-        return {
-          couples: state.couples - 1,
-        };
-      });
-    }
-  }
-
-  render() {
-    const { content, couples } = this.state;
-
-    return (
+  return (
+    <DndProvider backend={HTML5Backend}>
       <div className="trening">
         <header className="trening__header">
           Trening <div className="trening__score">{couples}</div>
         </header>
         <main className="trening__main">
           {content && content.length ? (
-            content.map((item, index) => (
-              <div
-                draggable
-                className="trening__item"
-                key={index}
-                onDragStart={(e) => this.handleDragStart(e)}
-                onDragOver={(e) => this.handleDragOver(e)}
-                onDragEnter={(e) => this.handleDragEnter(e)}
-                onDragLeave={(e) => this.handleDragLeave(e)}
-                onDrop={(e) => this.handleDrop(e)}
-                data-row-index={item.rowIndex}
-              >
-                {item.content}
-              </div>
-            ))
+            content.map((item, index) =>
+              item.cellIndex === 0 ? (
+                <Card
+                  key={index}
+                  data-row-index={item.rowIndex}
+                  text={item.content}
+                  type={ItemTypes.CARD}
+                />
+              ) : (
+                <Box
+                  key={index}
+                  data-row-index={item.rowIndex}
+                  text={item.content}
+                  accepts={ItemTypes.CARD}
+                  onDrop={(item) => handleDrop(index, item)}
+                />
+              )
+            )
           ) : (
             <h2 className="trening__loader">Just a moment</h2>
           )}
         </main>
       </div>
-    );
-  }
-}
+    </DndProvider>
+  );
+};
 
 export default App;

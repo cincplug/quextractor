@@ -2,6 +2,7 @@ $gutter: 20px;
 $color-main: #223344;
 $color-bg: #f8f8f8;
 $color-item: #ddeeff;
+$color-drop: #ffeedd;
 
 * {
   margin: 0;
@@ -28,12 +29,27 @@ $color-item: #ddeeff;
   &__item {
     background: $color-item;
     padding: $gutter;
+    &--box {
+      background: $color-drop;
+    }
+    transition: transform 0.2s ease-out;
+    &--status-dragging {
+      // box-shadow: 0 0 $gutter rgba($color-main, 0.3);
+      transform: scale(0);
+    }
   }
   &__score {
     position: absolute;
     top: $gutter;
     right: $gutter;
   }
+}
+
+.is-over {
+  transform: scale(1.1);
+}
+.can-drop {
+  opacity: 0.8;
 }
 
 .hidden {

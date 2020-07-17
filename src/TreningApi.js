@@ -4,8 +4,8 @@ const parseHtml = (str) => {
   var parser = new DOMParser();
   var doc = parser.parseFromString(str, "text/html");
   return Object.values(doc.querySelectorAll("tr")).map((row, rowIndex) =>
-    Object.values(row.querySelectorAll("td")).map((cell) => {
-      return { content: cell.innerHTML, rowIndex };
+    Object.values(row.querySelectorAll("td")).map((cell, cellIndex) => {
+      return { content: cell.innerHTML, rowIndex, cellIndex };
     })
   );
 };
