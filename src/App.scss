@@ -11,6 +11,7 @@ $default-easing: ease-out;
 
 * {
   margin: 0;
+  padding: 0;
 }
 
 .trening {
@@ -18,6 +19,14 @@ $default-easing: ease-out;
   grid-gap: $gutter;
   padding: $gutter;
   grid-template-columns: 1fr;
+  &__loader {
+    // display: grid;
+    grid-column: span 2;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 30vh;
+  }
   &__header {
     background: $color-main;
     color: $color-bg;

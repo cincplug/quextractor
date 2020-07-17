@@ -5,7 +5,7 @@ import TreningApi from "./TreningApi";
 import { Card } from "./Card";
 import { Box } from "./Box";
 import { ItemTypes } from "./ItemTypes";
-
+import bravo from "./bravo.gif";
 import "./App.scss";
 
 export const App = () => {
@@ -37,7 +37,11 @@ export const App = () => {
           Trening <div className="trening__score">{couples}</div>
         </header>
         <main className="trening__main">
-          {content && content.length ? (
+          {couples === 60 && dragSource ? (
+            <div className="trening__loader">
+              <img src={bravo} alt="" />
+            </div>
+          ) : content && content.length ? (
             content.map((item, index) =>
               item.cellIndex === 0 ? (
                 <Card
@@ -59,7 +63,7 @@ export const App = () => {
               )
             )
           ) : (
-            <h2 className="trening__loader">Just a moment</h2>
+            <div className="trening__loader">Just a moment</div>
           )}
         </main>
       </div>
