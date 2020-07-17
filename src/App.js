@@ -21,8 +21,8 @@ export const App = () => {
   });
 
   const handleDrop = useCallback((index, item) => {
-    const { text } = item;
-    console.warn(text);
+    const { text, rowIndex } = item;
+    console.warn(text, rowIndex);
   }, []);
 
   return (
@@ -37,14 +37,14 @@ export const App = () => {
               item.cellIndex === 0 ? (
                 <Card
                   key={index}
-                  data-row-index={item.rowIndex}
+                  rowIndex={item.rowIndex}
                   text={item.content}
                   type={ItemTypes.CARD}
                 />
               ) : (
                 <Box
                   key={index}
-                  data-row-index={item.rowIndex}
+                  rowIndex={item.rowIndex}
                   text={item.content}
                   accepts={ItemTypes.CARD}
                   onDrop={(item) => handleDrop(index, item)}

@@ -2,9 +2,9 @@ import React from "react";
 import { useDrag } from "react-dnd";
 import "./App.scss";
 
-export const Card = ({ text, type, isDropped }) => {
+export const Card = ({ text, type, rowIndex }) => {
   const [{ isDragging }, drag] = useDrag({
-    item: { text, type },
+    item: { text, type, rowIndex },
     isDragging(monitor) {
       const item = monitor.getItem();
       return text === item.text;
