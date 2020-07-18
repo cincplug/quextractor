@@ -59,7 +59,7 @@ export const App = () => {
           <div className="trening__score">{couples}</div>
         </header>
         <main className="trening__main">
-          {couples === 0 && dragSource ? (
+          {couples === 0 && dragSource > -1 ? (
             <div className="trening__loader">
               <img src={bravo} alt="Bravo!" />
             </div>
