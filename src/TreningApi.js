@@ -1,4 +1,4 @@
-const { REACT_APP_TARGET_URL, REACT_APP_PROXY_URL } = process.env;
+const { REACT_APP_PROXY_URL } = process.env;
 
 const parseHtml = (str) => {
   var parser = new DOMParser();
@@ -9,7 +9,7 @@ const parseHtml = (str) => {
     })
   );
 };
-const fetchSourceHtml = () => {
+const fetchSourceHtml = (url) => {
   return new Promise((resolve, reject) => {
     fetch(REACT_APP_PROXY_URL, {
       method: "GET",
@@ -17,7 +17,7 @@ const fetchSourceHtml = () => {
       headers: {
         "Content-Type": "application/json",
         Authorization: "Basic",
-        "Target-URL": REACT_APP_TARGET_URL,
+        "Target-URL": url,
       },
       body: null,
     })

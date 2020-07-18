@@ -12,14 +12,19 @@ export const App = () => {
   const [content, setContent] = useState([]);
   const [couples, setCouples] = useState(0);
   const [dragSource, setDragSource] = useState(-1);
+  const [sourceUrl, setSourceUrl] = useState("");
 
   useEffect(() => {
-    TreningApi.fetchSourceHtml().then((response) => {
+    fetchContent();
+  }, []);
+
+  function fetchContent(url = process.env.REACT_APP_TARGET_URL) {
+    TreningApi.fetchSourceHtml(url).then((response) => {
       const responseParsed = TreningApi.parseHtml(response);
       setCouples(responseParsed.length);
       setContent(responseParsed.flat());
     });
-  }, []);
+  }
 
   function handleMatch(rowIndex) {
     setContent(content.filter((item) => item.rowIndex !== rowIndex));
@@ -30,16 +35,33 @@ export const App = () => {
     setDragSource(rowIndex);
   }
 
+  function handleSubmit(e) {
+    e.preventDefault();
+    fetchContent(sourceUrl);
+  }
+
   return (
     <DndProvider backend={HTML5Backend}>
       <div className="trening">
         <header className="trening__header">
-          Trening <div className="trening__score">{couples}</div>
+          <form
+            className="trening__search-form"
+            onSubmit={(e) => handleSubmit(e)}
+          >
+            <input
+              className="trening__search-input"
+              type="text"
+              onChange={(e) => setSourceUrl(e.target.value)}
+              placeholder="URL to extract table content"
+            />
+          </form>
+          <h1 className="trening__title">Trening</h1>{" "}
+          <div className="trening__score">{couples}</div>
         </header>
         <main className="trening__main">
-          {couples === 60 && dragSource ? (
+          {couples === 0 && dragSource ? (
             <div className="trening__loader">
-              <img src={bravo} alt="" />
+              <img src={bravo} alt="Bravo!" />
             </div>
           ) : content && content.length ? (
             content.map((item, index) =>
