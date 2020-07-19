@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import { useDrop } from "react-dnd";
-import "./App.scss";
 
 export const Box = ({
   text,

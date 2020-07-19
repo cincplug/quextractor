@@ -1,6 +1,5 @@
 import React from "react";
 import { useDrag } from "react-dnd";
-import "./App.scss";
 
 export const Card = ({ text, type, rowIndex, handleDragBegin }) => {
   const [{ isDragging }, dragRef] = useDrag({
