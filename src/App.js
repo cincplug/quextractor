@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useCallback } from "react";
 import { DndProvider } from "react-dnd";
 import { HTML5Backend } from "react-dnd-html5-backend";
+import shuffle from "lodash.shuffle";
 import TreningApi from "./TreningApi";
 import { Card } from "./Card";
 import { Box } from "./Box";
@@ -22,7 +23,7 @@ export const App = () => {
     TreningApi.fetchSourceHtml(url).then((response) => {
       const responseParsed = TreningApi.parseHtml(response);
       setCouples(responseParsed.length);
-      setContent(responseParsed.flat());
+      setContent(shuffle(responseParsed.flat()));
     });
   }
 

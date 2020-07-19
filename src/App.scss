@@ -1,4 +1,4 @@
-$gutter: 20px;
+$gutter: 12px;
 $color-main: #223344;
 $color-bg: #f8f8f8;
 $color-item: #ddeeff;
@@ -20,7 +20,6 @@ $default-easing: ease-out;
   padding: $gutter;
   grid-template-columns: 1fr;
   &__loader {
-    // display: grid;
     grid-column: span 2;
     display: flex;
     justify-content: center;
@@ -55,7 +54,7 @@ $default-easing: ease-out;
   &__main {
     display: grid;
     grid-gap: $gutter;
-    grid-template-columns: 1fr 2fr;
+    grid-template-columns: repeat(6, 1fr);
   }
   &__item {
     background: $color-item;
