@@ -12,8 +12,8 @@ import "./Trening.scss";
 
 export const Trening = () => {
   const [content, setContent] = useState([]);
-  const [remainingCouples, setRemainingCouples] = useState(0);
-  const [totalCouples, setTotalCouples] = useState(0);
+  const [remainingPairs, setRemainingPairs] = useState(0);
+  const [totalPairs, setTotalPairs] = useState(0);
   const [dragSource, setDragSource] = useState(-1);
   const [sourceUrl, setSourceUrl] = useState("");
   const [limit, setLimit] = useState(10);
@@ -22,8 +22,8 @@ export const Trening = () => {
     (url = process.env.REACT_APP_TARGET_URL) => {
       TreningApi.fetchSourceHtml(url).then((response) => {
         const responseParsed = TreningApi.parseHtml(response);
-        setTotalCouples(limit);
-        setRemainingCouples(limit);
+        setTotalPairs(limit);
+        setRemainingPairs(limit);
         setContent(shuffle(responseParsed.flat().slice(0, limit * 2)));
       });
     },
@@ -37,9 +37,9 @@ export const Trening = () => {
   const handleMatch = useCallback(
     (rowIndex) => {
       setContent(content.filter((item) => item.rowIndex !== rowIndex));
-      setRemainingCouples(remainingCouples - 1);
+      setRemainingPairs(remainingPairs - 1);
     },
-    [content, remainingCouples]
+    [content, remainingPairs]
   );
 
   function handleDragBegin(rowIndex) {
@@ -78,7 +78,7 @@ export const Trening = () => {
             />
           </form>
           <div className="trening__limit">
-            Limit
+            Pairs
             {limitChoices.map((limitChoice, limitIndex) => (
               <button
                 className={`trening__limit-choice trening__limit-choice--${
@@ -92,11 +92,11 @@ export const Trening = () => {
             ))}
           </div>
           <div className="trening__score">
-            {totalCouples - remainingCouples} done, {remainingCouples} to go
+            {totalPairs - remainingPairs} done, {remainingPairs} to go
           </div>
         </header>
         <main className="trening__main">
-          {remainingCouples === 0 && dragSource > -1 ? (
+          {remainingPairs === 0 && dragSource > -1 ? (
             <div className="trening__loader">
               <img src={bravo} alt="Bravo!" />
             </div>
