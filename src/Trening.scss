@@ -50,12 +50,12 @@ $search-icon-size: 20px;
   box-sizing: border-box;
 }
 html {
-  font-size: 12px;
+  font-size: 16px;
   @media (min-width: $bp-m) {
-    font-size: 16px;
+    font-size: 18px;
   }
   @media (min-width: $bp-xxl) {
-    font-size: 18px;
+    font-size: 20px;
   }
 }
 body {
@@ -156,6 +156,9 @@ button {
     @media (min-width: $bp-l) {
       grid-template-columns: repeat(4, 1fr);
     }
+    @media (min-width: $bp-l) {
+      grid-template-columns: repeat(5, 1fr);
+    }
     @media (min-width: $bp-xxl) {
       grid-template-columns: repeat(6, 1fr);
     }
@@ -189,8 +192,10 @@ button {
     }
   }
   &__score {
-    display: flex;
-    justify-content: flex-end;
-    align-items: center;
+    text-align: right;
+    color: $color-grey;
+  }
+  &__score-value {
+    color: $color-white;
   }
 }
