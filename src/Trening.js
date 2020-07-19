@@ -45,8 +45,9 @@ export const Trening = () => {
       if (remainingPairsCount === 1) {
         setPage((prevPage) => prevPage + 1);
         setActiveGroup(
-          shuffle(content.slice((page + 1) * limit * 2, (page + 1) * limit * 4))
+          shuffle(content.slice((page + 1) * limit * 2, (page + 2) * limit * 2))
         );
+        setRemainingPairsCount(limit);
       }
     },
     [content, activeGroup, setActiveGroup, remainingPairsCount, limit, page]
