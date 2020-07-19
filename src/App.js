@@ -24,7 +24,7 @@ export const App = () => {
         const responseParsed = TreningApi.parseHtml(response);
         setTotalCouples(responseParsed.length);
         setRemainingCouples(responseParsed.length);
-        setContent(shuffle(responseParsed.flat()).slice(0, limit));
+        setContent(shuffle(responseParsed.flat().slice(0, limit)));
       });
     },
     [limit]
