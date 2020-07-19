@@ -4,10 +4,6 @@ import { useDrag } from "react-dnd";
 export const Card = ({ text, type, rowIndex, handleDragBegin }) => {
   const [{ isDragging }, dragRef] = useDrag({
     item: { rowIndex, type },
-    // isDragging(monitor) {
-    //   const item = monitor.getItem();
-    //   return text === item.text;
-    // },
     begin: () => {
       handleDragBegin(rowIndex);
     },

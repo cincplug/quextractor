@@ -16,8 +16,8 @@ export const Trening = () => {
   const [remainingPairsCount, setRemainingPairsCount] = useState(0);
   const [dragSource, setDragSource] = useState(-1);
   const [sourceUrl, setSourceUrl] = useState("");
-  const [page, setPage] = useState(0);
-  const [limit, setLimit] = useState(5);
+  const [page, setPage] = useState(1);
+  const [limit, setLimit] = useState(3);
 
   const fetchContent = useCallback(
     (url = process.env.REACT_APP_TARGET_URL) => {
@@ -45,7 +45,7 @@ export const Trening = () => {
       if (remainingPairsCount === 1) {
         setPage((prevPage) => prevPage + 1);
         setActiveGroup(
-          shuffle(content.slice((page + 1) * limit * 2, (page + 2) * limit * 2))
+          shuffle(content.slice(page * limit * 2, (page + 1) * limit * 2))
         );
         setRemainingPairsCount(limit);
       }
@@ -68,6 +68,7 @@ export const Trening = () => {
   }
 
   const limitChoices = [5, 10, 15, 20];
+  const pagesCount = Math.ceil(content.length / limit);
 
   return (
     <DndProvider backend={HTML5Backend}>
@@ -103,11 +104,17 @@ export const Trening = () => {
             ))}
           </div>
           <div className="trening__score">
-            {limit - remainingPairsCount} done, {remainingPairsCount} to go
+            {limit - remainingPairsCount} done, {remainingPairsCount} more
+            <br />
+            page {page} of {pagesCount}
           </div>
         </header>
         <main className="trening__main">
-          {content && content.length ? (
+          {remainingPairsCount === 0 && dragSource > -1 ? (
+            <div className="trening__loader">
+              <img src={bravo} alt="Bravo!" />
+            </div>
+          ) : content && content.length ? (
             activeGroup.map((item, index) =>
               item.cellIndex === 0 ? (
                 <Card

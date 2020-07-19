@@ -60,6 +60,7 @@ html {
 }
 body {
   background: $color-body;
+  color: $color-white;
 }
 button {
   background: none;
@@ -156,7 +157,7 @@ button {
       grid-template-columns: repeat(4, 1fr);
     }
     @media (min-width: $bp-xxl) {
-      grid-template-columns: repeat(5, 1fr);
+      grid-template-columns: repeat(6, 1fr);
     }
   }
   &__item {
@@ -167,11 +168,12 @@ button {
       display: flex;
       justify-content: center;
       align-items: center;
+      text-align: center;
       font-weight: bold;
+      color: $color-main;
     }
     &--box {
       background: $color-drop;
-      color: $color-white;
     }
     &--dragging {
       @include default-transition;
