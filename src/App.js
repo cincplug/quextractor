@@ -16,6 +16,7 @@ export const App = () => {
   const [totalCouples, setTotalCouples] = useState(0);
   const [dragSource, setDragSource] = useState(-1);
   const [sourceUrl, setSourceUrl] = useState("");
+  const [limit, setLimit] = useState(20);
 
   useEffect(() => {
     fetchContent();
@@ -26,7 +27,7 @@ export const App = () => {
       const responseParsed = TreningApi.parseHtml(response);
       setTotalCouples(responseParsed.length);
       setRemainingCouples(responseParsed.length);
-      setContent(shuffle(responseParsed.flat()));
+      setContent(shuffle(responseParsed.flat()).slice(0, limit));
     });
   }
 
@@ -47,10 +48,18 @@ export const App = () => {
     fetchContent(sourceUrl);
   }
 
+  function handleClickLimit(limit) {
+    setLimit(limit);
+    fetchContent();
+  }
+
+  const limitChoices = [10, 20, 30, 40];
+
   return (
     <DndProvider backend={HTML5Backend}>
       <div className="trening">
         <header className="trening__header">
+          <h1 className="trening__title">Trening</h1>
           <form
             className="trening__search-form"
             onSubmit={(e) => handleSubmit(e)}
@@ -65,7 +74,20 @@ export const App = () => {
               placeholder="URL to extract table content"
             />
           </form>
-          <h1 className="trening__title">Trening</h1>{" "}
+          <div className="trening__limit">
+            Limit
+            {limitChoices.map((limitChoice, limitIndex) => (
+              <button
+                className={`trening__limit-choice trening__limit-choice--${
+                  limitChoice === limit ? "active" : "inactive"
+                }`}
+                key={limitIndex}
+                onClick={() => handleClickLimit(limitChoice)}
+              >
+                {limitChoice}
+              </button>
+            ))}
+          </div>
           <div className="trening__score">
             {totalCouples - remainingCouples} done, {remainingCouples} to go
           </div>
