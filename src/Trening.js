@@ -13,7 +13,6 @@ import "./Trening.scss";
 export const Trening = () => {
   const [content, setContent] = useState([]);
   const [remainingPairs, setRemainingPairs] = useState(0);
-  const [totalPairs, setTotalPairs] = useState(0);
   const [dragSource, setDragSource] = useState(-1);
   const [sourceUrl, setSourceUrl] = useState("");
   const [limit, setLimit] = useState(10);
@@ -22,7 +21,6 @@ export const Trening = () => {
     (url = process.env.REACT_APP_TARGET_URL) => {
       TreningApi.fetchSourceHtml(url).then((response) => {
         const responseParsed = TreningApi.parseHtml(response);
-        setTotalPairs(limit);
         setRemainingPairs(limit);
         setContent(shuffle(responseParsed.flat().slice(0, limit * 2)));
       });
@@ -92,7 +90,7 @@ export const Trening = () => {
             ))}
           </div>
           <div className="trening__score">
-            {totalPairs - remainingPairs} done, {remainingPairs} to go
+            {limit - remainingPairs} done, {remainingPairs} to go
           </div>
         </header>
         <main className="trening__main">
