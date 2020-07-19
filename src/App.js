@@ -18,18 +18,21 @@ export const App = () => {
   const [sourceUrl, setSourceUrl] = useState("");
   const [limit, setLimit] = useState(20);
 
+  const fetchContent = useCallback(
+    (url = process.env.REACT_APP_TARGET_URL) => {
+      TreningApi.fetchSourceHtml(url).then((response) => {
+        const responseParsed = TreningApi.parseHtml(response);
+        setTotalCouples(responseParsed.length);
+        setRemainingCouples(responseParsed.length);
+        setContent(shuffle(responseParsed.flat()).slice(0, limit));
+      });
+    },
+    [limit]
+  );
+
   useEffect(() => {
     fetchContent();
-  }, []);
-
-  function fetchContent(url = process.env.REACT_APP_TARGET_URL) {
-    TreningApi.fetchSourceHtml(url).then((response) => {
-      const responseParsed = TreningApi.parseHtml(response);
-      setTotalCouples(responseParsed.length);
-      setRemainingCouples(responseParsed.length);
-      setContent(shuffle(responseParsed.flat()).slice(0, limit));
-    });
-  }
+  }, [fetchContent]);
 
   const handleMatch = useCallback(
     (rowIndex) => {
