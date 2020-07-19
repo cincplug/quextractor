@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import { DndProvider } from "react-dnd";
 import { HTML5Backend } from "react-dnd-html5-backend";
 import TreningApi from "./TreningApi";
@@ -26,10 +26,13 @@ export const App = () => {
     });
   }
 
-  function handleMatch(rowIndex) {
-    setContent(content.filter((item) => item.rowIndex !== rowIndex));
-    setCouples(couples - 1);
-  }
+  const handleMatch = useCallback(
+    (rowIndex) => {
+      setContent(content.filter((item) => item.rowIndex !== rowIndex));
+      setCouples(couples - 1);
+    },
+    [content, couples]
+  );
 
   function handleDragBegin(rowIndex) {
     setDragSource(rowIndex);

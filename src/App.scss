@@ -71,6 +71,10 @@ $default-easing: ease-out;
       @include default-transition;
       transform: scale(1.05);
     }
+    &--will-leave {
+      @include default-transition;
+      transform: scale(0);
+    }
   }
   &__score {
     display: flex;
