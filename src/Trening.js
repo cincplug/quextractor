@@ -68,7 +68,7 @@ export const Trening = () => {
   }
 
   const limitChoices = [5, 10, 15, 20];
-  const pagesCount = Math.ceil(content.length / limit);
+  const pagesCount = Math.ceil(content.length / limit / 2);
 
   return (
     <DndProvider backend={HTML5Backend}>
