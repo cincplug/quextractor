@@ -12,17 +12,21 @@ import "./Trening.scss";
 
 export const Trening = () => {
   const [content, setContent] = useState([]);
-  const [remainingPairs, setRemainingPairs] = useState(0);
+  const [activeGroup, setActiveGroup] = useState([]);
+  const [remainingPairsCount, setRemainingPairsCount] = useState(0);
   const [dragSource, setDragSource] = useState(-1);
   const [sourceUrl, setSourceUrl] = useState("");
-  const [limit, setLimit] = useState(10);
+  const [page, setPage] = useState(0);
+  const [limit, setLimit] = useState(5);
 
   const fetchContent = useCallback(
     (url = process.env.REACT_APP_TARGET_URL) => {
       TreningApi.fetchSourceHtml(url).then((response) => {
         const responseParsed = TreningApi.parseHtml(response);
-        setRemainingPairs(limit);
-        setContent(shuffle(responseParsed.flat().slice(0, limit * 2)));
+        setRemainingPairsCount(limit);
+        const flatResponse = responseParsed.flat();
+        setContent(flatResponse);
+        setActiveGroup(shuffle(flatResponse.slice(0, limit * 2)));
       });
     },
     [limit]
@@ -34,10 +38,18 @@ export const Trening = () => {
 
   const handleMatch = useCallback(
     (rowIndex) => {
-      setContent(content.filter((item) => item.rowIndex !== rowIndex));
-      setRemainingPairs(remainingPairs - 1);
+      setActiveGroup(activeGroup.filter((item) => item.rowIndex !== rowIndex));
+      setRemainingPairsCount(
+        (prevRemainingPairsCount) => prevRemainingPairsCount - 1
+      );
+      if (remainingPairsCount === 1) {
+        setPage((prevPage) => prevPage + 1);
+        setActiveGroup(
+          shuffle(content.slice((page + 1) * limit * 2, (page + 1) * limit * 4))
+        );
+      }
     },
-    [content, remainingPairs]
+    [content, activeGroup, setActiveGroup, remainingPairsCount, limit, page]
   );
 
   function handleDragBegin(rowIndex) {
@@ -90,16 +102,12 @@ export const Trening = () => {
             ))}
           </div>
           <div className="trening__score">
-            {limit - remainingPairs} done, {remainingPairs} to go
+            {limit - remainingPairsCount} done, {remainingPairsCount} to go
           </div>
         </header>
         <main className="trening__main">
-          {remainingPairs === 0 && dragSource > -1 ? (
-            <div className="trening__loader">
-              <img src={bravo} alt="Bravo!" />
-            </div>
-          ) : content && content.length ? (
-            content.map((item, index) =>
+          {content && content.length ? (
+            activeGroup.map((item, index) =>
               item.cellIndex === 0 ? (
                 <Card
                   key={index}
