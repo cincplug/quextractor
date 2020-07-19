@@ -1,24 +1,58 @@
 $gutter: 12px;
-$color-main: #223344;
-$color-bg: #f8f8f8;
-$color-item: #ddeeff;
-$color-drop: #ffeedd;
+$bp-s: 480px;
+$bp-m: 768px;
+$bp-l: 1024px;
+$bp-xl: 1200px;
+$bp-xxl: 1400px;
+
+$color-body: #39393a;
+$color-main: #24282a;
+$color-grey: #919191;
+$color-white: #f8f8f8;
+$color-item: $color-white;
+$color-search: #64676833;
+$color-drop: $color-search;
+
 $default-duration: 0.3s;
 $default-easing: ease-out;
+
+$search-icon-size: 20px;
+
 @mixin default-transition($property: transform) {
   transition: $property $default-duration $default-easing;
+}
+@mixin border-radius-small {
+  border-radius: 4px;
+}
+
+@font-face {
+  font-family: "Brando Sans";
+  src: local("Brando Sans Light"), local("BrandoSans-Light"),
+    url("/static/fonts/subset-BrandoSans-Light.woff2") format("woff2");
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Brando Sans";
+  src: local("Brando Sans SemiBold"), local("BrandoSans-SemiBold"),
+    url("/static/fonts/subset-BrandoSans-SemiBold.woff2") format("woff2");
+  font-weight: bold;
+  font-style: normal;
+  font-display: swap;
 }
 
 * {
   margin: 0;
   padding: 0;
+  font-family: "Brando Sans";
+}
+body {
+  background: $color-body;
 }
 
 .trening {
-  display: grid;
-  grid-gap: $gutter;
-  padding: $gutter;
-  grid-template-columns: 1fr;
   &__loader {
     grid-column: span 2;
     display: flex;
@@ -28,7 +62,7 @@ $default-easing: ease-out;
   }
   &__header {
     background: $color-main;
-    color: $color-bg;
+    color: $color-white;
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
     text-align: center;
@@ -39,28 +73,67 @@ $default-easing: ease-out;
     font-size: 2rem;
   }
   &__search-form {
+    display: flex;
     justify-self: flex-start;
+    align-items: center;
   }
   &__search-input {
     padding: $gutter / 3 0;
-    background: transparent;
+    background: $color-search;
     border: none;
-    border-bottom: 1px solid $color-bg;
+    padding: 0 1rem 0 3rem;
+    margin-left: -1rem;
+    @include border-radius-small;
     outline: none;
-    color: $color-bg;
+    color: $color-white;
     font-size: 1rem;
     width: 20rem;
+    height: 2rem;
+  }
+  &__search-submit {
+    background: none;
+    appearance: none;
+    border: none;
+    display: flex;
+    align-items: center;
+    transform: translateX($gutter);
+  }
+  &__search-icon {
+    width: $search-icon-size;
+    height: $search-icon-size;
+    fill: $color-grey;
   }
   &__main {
     display: grid;
     grid-gap: $gutter;
-    grid-template-columns: repeat(6, 1fr);
+    padding: $gutter;
+    grid-template-columns: repeat(1, 1fr);
+    @media (min-width: $bp-s) {
+      grid-template-columns: repeat(2, 1fr);
+    }
+    @media (min-width: $bp-m) {
+      grid-template-columns: repeat(3, 1fr);
+    }
+    @media (min-width: $bp-l) {
+      grid-template-columns: repeat(4, 1fr);
+    }
+    @media (min-width: $bp-xxl) {
+      grid-template-columns: repeat(5, 1fr);
+    }
   }
   &__item {
     background: $color-item;
     padding: $gutter;
+    &--card {
+      @include border-radius-small;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-weight: bold;
+    }
     &--box {
       background: $color-drop;
+      color: $color-white;
     }
     &--dragging {
       @include default-transition;

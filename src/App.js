@@ -6,12 +6,14 @@ import TreningApi from "./TreningApi";
 import { Card } from "./Card";
 import { Box } from "./Box";
 import { ItemTypes } from "./ItemTypes";
-import bravo from "./bravo.gif";
+import bravo from "./assets/img/bravo.gif";
+import { ReactComponent as SearchIcon } from "./assets/img/search.svg";
 import "./App.scss";
 
 export const App = () => {
   const [content, setContent] = useState([]);
-  const [couples, setCouples] = useState(0);
+  const [remainingCouples, setRemainingCouples] = useState(0);
+  const [totalCouples, setTotalCouples] = useState(0);
   const [dragSource, setDragSource] = useState(-1);
   const [sourceUrl, setSourceUrl] = useState("");
 
@@ -22,7 +24,8 @@ export const App = () => {
   function fetchContent(url = process.env.REACT_APP_TARGET_URL) {
     TreningApi.fetchSourceHtml(url).then((response) => {
       const responseParsed = TreningApi.parseHtml(response);
-      setCouples(responseParsed.length);
+      setTotalCouples(responseParsed.length);
+      setRemainingCouples(responseParsed.length);
       setContent(shuffle(responseParsed.flat()));
     });
   }
@@ -30,9 +33,9 @@ export const App = () => {
   const handleMatch = useCallback(
     (rowIndex) => {
       setContent(content.filter((item) => item.rowIndex !== rowIndex));
-      setCouples(couples - 1);
+      setRemainingCouples(remainingCouples - 1);
     },
-    [content, couples]
+    [content, remainingCouples]
   );
 
   function handleDragBegin(rowIndex) {
@@ -52,6 +55,9 @@ export const App = () => {
             className="trening__search-form"
             onSubmit={(e) => handleSubmit(e)}
           >
+            <button type="submit" className="trening__search-submit">
+              <SearchIcon className="trening__search-icon" />
+            </button>
             <input
               className="trening__search-input"
               type="text"
@@ -60,10 +66,12 @@ export const App = () => {
             />
           </form>
           <h1 className="trening__title">Trening</h1>{" "}
-          <div className="trening__score">{couples}</div>
+          <div className="trening__score">
+            {totalCouples - remainingCouples} done, {remainingCouples} to go
+          </div>
         </header>
         <main className="trening__main">
-          {couples === 0 && dragSource > -1 ? (
+          {remainingCouples === 0 && dragSource > -1 ? (
             <div className="trening__loader">
               <img src={bravo} alt="Bravo!" />
             </div>
