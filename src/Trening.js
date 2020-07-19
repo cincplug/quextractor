@@ -16,7 +16,7 @@ export const Trening = () => {
   const [totalCouples, setTotalCouples] = useState(0);
   const [dragSource, setDragSource] = useState(-1);
   const [sourceUrl, setSourceUrl] = useState("");
-  const [limit, setLimit] = useState(20);
+  const [limit, setLimit] = useState(10);
 
   const fetchContent = useCallback(
     (url = process.env.REACT_APP_TARGET_URL) => {
@@ -24,7 +24,7 @@ export const Trening = () => {
         const responseParsed = TreningApi.parseHtml(response);
         setTotalCouples(limit);
         setRemainingCouples(limit);
-        setContent(shuffle(responseParsed.flat().slice(0, limit)));
+        setContent(shuffle(responseParsed.flat().slice(0, limit * 2)));
       });
     },
     [limit]
@@ -56,7 +56,7 @@ export const Trening = () => {
     fetchContent();
   }
 
-  const limitChoices = [10, 20, 30, 40];
+  const limitChoices = [5, 10, 15, 20];
 
   return (
     <DndProvider backend={HTML5Backend}>
