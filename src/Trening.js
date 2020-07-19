@@ -17,7 +17,7 @@ export const Trening = () => {
   const [dragSource, setDragSource] = useState(-1);
   const [sourceUrl, setSourceUrl] = useState("");
   const [page, setPage] = useState(1);
-  const [limit, setLimit] = useState(5);
+  const [limit, setLimit] = useState(10);
 
   const fetchContent = useCallback(
     (url = process.env.REACT_APP_TARGET_URL) => {
@@ -105,7 +105,7 @@ export const Trening = () => {
           </div>
           <div className="trening__score">
             <span className="trening__score-value">
-              {limit - remainingPairsCount}
+              {Math.max(limit - remainingPairsCount, 0)}
             </span>{" "}
             done,{" "}
             <span className="trening__score-value">{remainingPairsCount}</span>{" "}
