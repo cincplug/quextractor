@@ -44,6 +44,16 @@ export const Trening = () => {
     fetchContent();
   }, [fetchContent]);
 
+  const goToPage = useCallback(
+    (page, change) => {
+      setPage((prevPage) => prevPage + change);
+      setActiveGroup(
+        shuffle(content.slice(page * limit * 2, (page + 1) * limit * 2))
+      );
+    },
+    [content, limit]
+  );
+
   const handleMatch = useCallback(
     (rowIndex) => {
       setActiveGroup(activeGroup.filter((item) => item.rowIndex !== rowIndex));
@@ -55,7 +65,7 @@ export const Trening = () => {
         setRemainingPairsCount(limit);
       }
     },
-    [content, activeGroup, setActiveGroup, remainingPairsCount, limit, page]
+    [activeGroup, setActiveGroup, remainingPairsCount, limit, page, goToPage]
   );
 
   function handleDragBegin(rowIndex) {
@@ -70,13 +80,6 @@ export const Trening = () => {
   function handleClickLimit(limit) {
     setLimit(limit);
     fetchContent();
-  }
-
-  function goToPage(page, change) {
-    setPage((prevPage) => prevPage + change);
-    setActiveGroup(
-      shuffle(content.slice(page * limit * 2, (page + 1) * limit * 2))
-    );
   }
 
   const limitChoices = [5, 10, 15, 20];
