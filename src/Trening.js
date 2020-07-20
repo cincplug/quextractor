@@ -43,10 +43,7 @@ export const Trening = () => {
         (prevRemainingPairsCount) => prevRemainingPairsCount - 1
       );
       if (remainingPairsCount === 1) {
-        setPage((prevPage) => prevPage + 1);
-        setActiveGroup(
-          shuffle(content.slice(page * limit * 2, (page + 1) * limit * 2))
-        );
+        goToPage(page);
         setRemainingPairsCount(limit);
       }
     },
@@ -65,6 +62,13 @@ export const Trening = () => {
   function handleClickLimit(limit) {
     setLimit(limit);
     fetchContent();
+  }
+
+  function goToPage(page, change) {
+    setPage((prevPage) => prevPage + change);
+    setActiveGroup(
+      shuffle(content.slice(page * limit * 2, (page + 1) * limit * 2))
+    );
   }
 
   const limitChoices = [5, 10, 15, 20];
@@ -111,8 +115,22 @@ export const Trening = () => {
             <span className="trening__score-value">{remainingPairsCount}</span>{" "}
             more
             <br />
+            <button
+              className="trening__page trening__page--next"
+              onClick={() => goToPage(page, -1)}
+              disabled={page <= 1}
+            >
+              &#5176;
+            </button>{" "}
             page <span className="trening__score-value">{page}</span> of{" "}
-            <span className="trening__score-value">{pagesCount}</span>
+            <span className="trening__score-value">{pagesCount}</span>{" "}
+            <button
+              className="trening__page trening__page--next"
+              onClick={() => goToPage(page, 1)}
+              disabled={page >= pagesCount}
+            >
+              &#5171;
+            </button>
           </div>
         </header>
         <main className="trening__main">

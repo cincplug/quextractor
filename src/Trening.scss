@@ -198,4 +198,10 @@ button {
   &__score-value {
     color: $color-white;
   }
+  &__page {
+    color: $color-white;
+    &:disabled {
+      opacity: 0.3;
+    }
+  }
 }
