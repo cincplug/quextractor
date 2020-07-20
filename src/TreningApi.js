@@ -7,7 +7,7 @@ const parseHtml = (str) => {
     title: doc.title,
     pairs: Object.values(doc.querySelectorAll("tr")).map((row, rowIndex) =>
       Object.values(row.querySelectorAll("td")).map((cell, cellIndex) => {
-        return { content: cell.innerHTML, rowIndex, cellIndex };
+        return { content: cell.textContent || "", rowIndex, cellIndex };
       })
     ),
   };

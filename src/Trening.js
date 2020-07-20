@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from "react";
+import React, { useState, useEffect, useCallback, useRef } from "react";
 import { DndProvider } from "react-dnd";
 import { HTML5Backend } from "react-dnd-html5-backend";
 import shuffle from "lodash.shuffle";
@@ -8,6 +8,7 @@ import { Box } from "./Box";
 import { ItemTypes } from "./ItemTypes";
 import logo from "./assets/img/mirabeau.svg";
 import bravo from "./assets/img/bravo.gif";
+import { suggestions } from "./suggestions.json";
 import { ReactComponent as SearchIcon } from "./assets/img/search.svg";
 import "./Trening.scss";
 
@@ -22,6 +23,8 @@ export const Trening = () => {
   const [sourceTitle, setSourceTitle] = useState("");
   const [page, setPage] = useState(1);
   const [limit, setLimit] = useState(10);
+
+  const searchElementRef = useRef(null);
 
   const fetchContent = useCallback(
     (url = targetUrl) => {
@@ -97,6 +100,7 @@ export const Trening = () => {
             <input
               className="trening__search-input"
               type="text"
+              ref={searchElementRef}
               onChange={(e) => setSourceUrl(e.target.value)}
               placeholder="URL to extract table content"
             />
@@ -142,23 +146,6 @@ export const Trening = () => {
           </div>
         </header>
         <main className="trening__main">
-          <section className="trening__info">
-            <p>
-              This auto-generated quiz has been extracted from{" "}
-              <a
-                className="trening__source-url"
-                href={sourceUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                {sourceTitle}
-              </a>
-            </p>
-            <p>
-              Drag white cards to corresponding black cards to solve it. Try
-              extracting quiz from different URL if you want.
-            </p>
-          </section>
           {remainingPairsCount === 0 && dragSource > -1 ? (
             <div className="trening__loader">
               <img src={bravo} alt="Bravo!" />
@@ -187,6 +174,44 @@ export const Trening = () => {
           ) : (
             <div className="trening__loader">Just a moment</div>
           )}
+
+          <section className="trening__info">
+            <p>
+              This auto-generated quiz has been extracted from{" "}
+              <a
+                className="trening__source-url trening__link"
+                href={sourceUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                {sourceTitle}
+              </a>
+            </p>
+            <p>Drag white cards to corresponding black cards to solve it. </p>
+            <p>
+              Try extracting from{" "}
+              <span
+                className="trening__focus trening__link"
+                onClick={() => searchElementRef.current.focus()}
+              >
+                different URL
+              </span>{" "}
+              if you want. Currently only table structure with two columns in
+              supported.
+            </p>
+            <p>
+              Few random suggestions:
+              {suggestions.map((item, index) => (
+                <button
+                  key={index}
+                  className="trening__suggestion trening__link"
+                  onClick={() => fetchContent(item)}
+                >
+                  {index + 1}
+                </button>
+              ))}
+            </p>
+          </section>
         </main>
       </div>
     </DndProvider>
