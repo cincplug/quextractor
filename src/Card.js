@@ -1,7 +1,7 @@
 import React from "react";
 import { useDrag } from "react-dnd";
 
-export const Card = ({ text, type, rowIndex, handleDragBegin }) => {
+const Card = ({ text, type, rowIndex, handleDragBegin }) => {
   const [{ isDragging }, dragRef] = useDrag({
     item: { rowIndex, type },
     begin: () => {
@@ -22,3 +22,5 @@ export const Card = ({ text, type, rowIndex, handleDragBegin }) => {
     </div>
   );
 };
+
+export default Card;

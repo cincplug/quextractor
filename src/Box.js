@@ -1,13 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useDrop } from "react-dnd";
 
-export const Box = ({
-  text,
-  accepts: accept,
-  handleMatch,
-  rowIndex,
-  dragSource,
-}) => {
+const Box = ({ text, accepts: accept, handleMatch, rowIndex, dragSource }) => {
   const [willLeave, setWillLeave] = useState(false);
   useEffect(() => {
     if (willLeave) {
@@ -45,3 +39,5 @@ export const Box = ({
     </div>
   );
 };
+
+export default Box;

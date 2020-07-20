@@ -3,8 +3,8 @@ import { DndProvider } from "react-dnd";
 import { HTML5Backend } from "react-dnd-html5-backend";
 import shuffle from "lodash.shuffle";
 import TreningApi from "./TreningApi";
-import { Card } from "./Card";
-import { Box } from "./Box";
+import Card from "./Card";
+import Box from "./Box";
 import { ItemTypes } from "./ItemTypes";
 import logo from "./assets/img/mirabeau.svg";
 import bravo from "./assets/img/bravo.gif";
@@ -14,7 +14,7 @@ import "./Trening.scss";
 
 const targetUrl = process.env.REACT_APP_TARGET_URL;
 
-export const Trening = () => {
+const Trening = () => {
   const [content, setContent] = useState([]);
   const [activeGroup, setActiveGroup] = useState([]);
   const [remainingPairsCount, setRemainingPairsCount] = useState(0);
