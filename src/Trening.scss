@@ -13,8 +13,8 @@ $color-item: $color-white;
 $color-search: #64676833;
 $color-drop: $color-search;
 
-$default-duration: 0.3s;
-$default-easing: ease-out;
+$default-duration: 0.2s;
+$default-easing: ease-in;
 
 $search-icon-size: 20px;
 
@@ -87,7 +87,24 @@ button {
     }
   }
   &__title {
-    font-size: 2rem;
+    font-size: 1rem;
+    color: $color-grey;
+    font-weight: normal;
+    display: flex;
+    align-items: center;
+  }
+  &__logo {
+    width: 10rem;
+    margin-left: -9rem;
+    transition: transform $default-duration $default-easing;
+    &:hover {
+      transform: translateX(9rem);
+      background: $color-main;
+    }
+  }
+  &__title-text {
+    width: 100%;
+    margin-left: 1rem;
   }
   &__search-form {
     display: flex;

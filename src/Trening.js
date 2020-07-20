@@ -6,6 +6,7 @@ import TreningApi from "./TreningApi";
 import { Card } from "./Card";
 import { Box } from "./Box";
 import { ItemTypes } from "./ItemTypes";
+import logo from "./assets/img/mirabeau.svg";
 import bravo from "./assets/img/bravo.gif";
 import { ReactComponent as SearchIcon } from "./assets/img/search.svg";
 import "./Trening.scss";
@@ -78,7 +79,10 @@ export const Trening = () => {
     <DndProvider backend={HTML5Backend}>
       <div className="trening">
         <header className="trening__header">
-          <h1 className="trening__title">Trening</h1>
+          <h1 className="trening__title">
+            <img src={logo} alt="Mirabeau" className="trening__logo" />
+            <span className="trening__title-text">Quiz Renderer</span>
+          </h1>
           <form
             className="trening__search-form"
             onSubmit={(e) => handleSubmit(e)}
