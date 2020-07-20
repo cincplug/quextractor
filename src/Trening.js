@@ -91,7 +91,7 @@ const Trening = () => {
         <header className="trening__header">
           <h1 className="trening__title">
             <img src={logo} alt="Mirabeau" className="trening__logo" />
-            <span className="trening__title-text">Quiz Renderer</span>
+            <span className="trening__title-text">Quextractor</span>
           </h1>
           <form
             className="trening__search-form"
