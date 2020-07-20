@@ -68,6 +68,13 @@ button {
   border: none;
   outline: none;
 }
+a {
+  color: $color-grey;
+  text-decoration: none;
+  &:hover {
+    text-decoration: underline;
+  }
+}
 .trening {
   &__loader {
     grid-column: 1/-1;
@@ -179,6 +186,9 @@ button {
     @media (min-width: $bp-xxl) {
       grid-template-columns: repeat(6, 1fr);
     }
+  }
+  &__info {
+    grid-column: 1/-1;
   }
   &__item {
     background: $color-item;

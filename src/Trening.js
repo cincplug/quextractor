@@ -11,17 +11,19 @@ import bravo from "./assets/img/bravo.gif";
 import { ReactComponent as SearchIcon } from "./assets/img/search.svg";
 import "./Trening.scss";
 
+const targetUrl = process.env.REACT_APP_TARGET_URL;
+
 export const Trening = () => {
   const [content, setContent] = useState([]);
   const [activeGroup, setActiveGroup] = useState([]);
   const [remainingPairsCount, setRemainingPairsCount] = useState(0);
   const [dragSource, setDragSource] = useState(-1);
-  const [sourceUrl, setSourceUrl] = useState("");
+  const [sourceUrl, setSourceUrl] = useState(targetUrl);
   const [page, setPage] = useState(1);
   const [limit, setLimit] = useState(10);
 
   const fetchContent = useCallback(
-    (url = process.env.REACT_APP_TARGET_URL) => {
+    (url = targetUrl) => {
       TreningApi.fetchSourceHtml(url).then((response) => {
         const responseParsed = TreningApi.parseHtml(response);
         setRemainingPairsCount(limit);
@@ -138,6 +140,17 @@ export const Trening = () => {
           </div>
         </header>
         <main className="trening__main">
+          <section className="trening__info">
+            Source URL:{" "}
+            <a
+              className="trening__source-url"
+              href={sourceUrl}
+              target="_blank"
+              rel="noopener"
+            >
+              {sourceUrl}
+            </a>
+          </section>
           {remainingPairsCount === 0 && dragSource > -1 ? (
             <div className="trening__loader">
               <img src={bravo} alt="Bravo!" />
