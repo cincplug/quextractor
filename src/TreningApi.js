@@ -3,11 +3,14 @@ const { REACT_APP_PROXY_URL } = process.env;
 const parseHtml = (str) => {
   var parser = new DOMParser();
   var doc = parser.parseFromString(str, "text/html");
-  return Object.values(doc.querySelectorAll("tr")).map((row, rowIndex) =>
-    Object.values(row.querySelectorAll("td")).map((cell, cellIndex) => {
-      return { content: cell.innerHTML, rowIndex, cellIndex };
-    })
-  );
+  return {
+    title: doc.title,
+    pairs: Object.values(doc.querySelectorAll("tr")).map((row, rowIndex) =>
+      Object.values(row.querySelectorAll("td")).map((cell, cellIndex) => {
+        return { content: cell.innerHTML, rowIndex, cellIndex };
+      })
+    ),
+  };
 };
 const fetchSourceHtml = (url) => {
   return new Promise((resolve, reject) => {

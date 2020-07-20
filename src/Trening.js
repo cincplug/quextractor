@@ -19,6 +19,7 @@ export const Trening = () => {
   const [remainingPairsCount, setRemainingPairsCount] = useState(0);
   const [dragSource, setDragSource] = useState(-1);
   const [sourceUrl, setSourceUrl] = useState(targetUrl);
+  const [sourceTitle, setSourceTitle] = useState("");
   const [page, setPage] = useState(1);
   const [limit, setLimit] = useState(10);
 
@@ -27,7 +28,8 @@ export const Trening = () => {
       TreningApi.fetchSourceHtml(url).then((response) => {
         const responseParsed = TreningApi.parseHtml(response);
         setRemainingPairsCount(limit);
-        const flatResponse = responseParsed.flat();
+        setSourceTitle(responseParsed.title);
+        const flatResponse = responseParsed.pairs.flat();
         setContent(flatResponse);
         setActiveGroup(shuffle(flatResponse.slice(0, limit * 2)));
       });
@@ -141,15 +143,21 @@ export const Trening = () => {
         </header>
         <main className="trening__main">
           <section className="trening__info">
-            Source URL:{" "}
-            <a
-              className="trening__source-url"
-              href={sourceUrl}
-              target="_blank"
-              rel="noopener"
-            >
-              {sourceUrl}
-            </a>
+            <p>
+              This auto-generated quiz has been extracted from{" "}
+              <a
+                className="trening__source-url"
+                href={sourceUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                {sourceTitle}
+              </a>
+            </p>
+            <p>
+              Drag white cards to corresponding black cards to solve it. Try
+              extracting quiz from different URL if you want.
+            </p>
           </section>
           {remainingPairsCount === 0 && dragSource > -1 ? (
             <div className="trening__loader">

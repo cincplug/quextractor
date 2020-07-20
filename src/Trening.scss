@@ -11,7 +11,7 @@ $color-grey: #919191;
 $color-white: #f8f8f8;
 $color-item: $color-white;
 $color-search: #64676833;
-$color-drop: $color-search;
+$color-drop: $color-main;
 
 $default-duration: 0.2s;
 $default-easing: ease-in;
@@ -60,16 +60,17 @@ html {
 }
 body {
   background: $color-body;
-  color: $color-white;
+  color: $color-grey;
 }
-button {
+button,
+input {
   background: none;
   appearance: none;
   border: none;
   outline: none;
 }
 a {
-  color: $color-grey;
+  color: $color-white;
   text-decoration: none;
   &:hover {
     text-decoration: underline;
@@ -189,12 +190,13 @@ a {
   }
   &__info {
     grid-column: 1/-1;
+    margin-bottom: 2rem;
   }
   &__item {
     background: $color-item;
     padding: $gutter;
+    @include border-radius-small;
     &--card {
-      @include border-radius-small;
       display: flex;
       justify-content: center;
       align-items: center;
@@ -204,6 +206,7 @@ a {
     }
     &--box {
       background: $color-drop;
+      color: $color-white;
     }
     &--dragging {
       @include default-transition;
