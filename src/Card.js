@@ -16,7 +16,7 @@ const Card = ({ text, type, rowIndex, handleDragBegin }) => {
   return (
     <div
       ref={dragRef}
-      className={`trening__item trening__item--card trening__item--${statusClassName}`}
+      className={`quextractor__item quextractor__item--card quextractor__item--${statusClassName}`}
     >
       {text}
     </div>

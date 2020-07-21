@@ -29,11 +29,11 @@ const Box = ({ text, accepts: accept, handleMatch, rowIndex, dragSource }) => {
   return (
     <div
       ref={dropRef}
-      className={`trening__item 
-        trening__item--box 
-        trening__item--${canDrop ? "can-drop" : "cant-drop"}
-        trening__item--${isOver ? "hovered" : "not-hovered"} 
-        trening__item--${willLeave ? "will-leave" : "wont-leave"}`}
+      className={`quextractor__item 
+        quextractor__item--box 
+        quextractor__item--${canDrop ? "can-drop" : "cant-drop"}
+        quextractor__item--${isOver ? "hovered" : "not-hovered"} 
+        quextractor__item--${willLeave ? "will-leave" : "wont-leave"}`}
     >
       {text}
     </div>

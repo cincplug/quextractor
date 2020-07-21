@@ -36,9 +36,9 @@ const fetchSourceHtml = (url) => {
   });
 };
 
-const TreningApi = {
+const QuextractorApi = {
   parseHtml,
   fetchSourceHtml,
 };
 
-export default TreningApi;
+export default QuextractorApi;

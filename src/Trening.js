@@ -2,7 +2,7 @@ import React, { useState, useEffect, useCallback, useRef } from "react";
 import { DndProvider } from "react-dnd";
 import { HTML5Backend } from "react-dnd-html5-backend";
 import shuffle from "lodash.shuffle";
-import TreningApi from "./TreningApi";
+import QuextractorApi from "./QuextractorApi";
 import Card from "./Card";
 import Box from "./Box";
 import { ItemTypes } from "./ItemTypes";
@@ -10,11 +10,11 @@ import logo from "./assets/img/mirabeau.svg";
 import bravo from "./assets/img/bravo.gif";
 import { suggestions } from "./suggestions.json";
 import { ReactComponent as SearchIcon } from "./assets/img/search.svg";
-import "./Trening.scss";
+import "./Quextractor.scss";
 
 const targetUrl = process.env.REACT_APP_TARGET_URL;
 
-const Trening = () => {
+const Quextractor = () => {
   const [content, setContent] = useState([]);
   const [activeGroup, setActiveGroup] = useState([]);
   const [remainingPairsCount, setRemainingPairsCount] = useState(0);
@@ -28,8 +28,8 @@ const Trening = () => {
 
   const fetchContent = useCallback(
     (url = targetUrl) => {
-      TreningApi.fetchSourceHtml(url).then((response) => {
-        const responseParsed = TreningApi.parseHtml(response);
+      QuextractorApi.fetchSourceHtml(url).then((response) => {
+        const responseParsed = QuextractorApi.parseHtml(response);
         setRemainingPairsCount(limit);
         setSourceTitle(responseParsed.title);
         const flatResponse = responseParsed.pairs.flat();
@@ -87,32 +87,32 @@ const Trening = () => {
 
   return (
     <DndProvider backend={HTML5Backend}>
-      <div className="trening">
-        <header className="trening__header">
-          <h1 className="trening__title">
-            <img src={logo} alt="Mirabeau" className="trening__logo" />
-            <span className="trening__title-text">Quextractor</span>
+      <div className="quextractor">
+        <header className="quextractor__header">
+          <h1 className="quextractor__title">
+            <img src={logo} alt="Mirabeau" className="quextractor__logo" />
+            <span className="quextractor__title-text">Quextractor</span>
           </h1>
           <form
-            className="trening__search-form"
+            className="quextractor__search-form"
             onSubmit={(e) => handleSubmit(e)}
           >
-            <button type="submit" className="trening__search-submit">
-              <SearchIcon className="trening__search-icon" />
+            <button type="submit" className="quextractor__search-submit">
+              <SearchIcon className="quextractor__search-icon" />
             </button>
             <input
-              className="trening__search-input"
+              className="quextractor__search-input"
               type="text"
               ref={searchElementRef}
               onChange={(e) => setSourceUrl(e.target.value)}
               placeholder="URL to extract table content"
             />
           </form>
-          <div className="trening__limit">
+          <div className="quextractor__limit">
             Pairs
             {limitChoices.map((limitChoice, limitIndex) => (
               <button
-                className={`trening__limit-choice trening__limit-choice--${
+                className={`quextractor__limit-choice quextractor__limit-choice--${
                   limitChoice === limit ? "active" : "inactive"
                 }`}
                 key={limitIndex}
@@ -122,25 +122,27 @@ const Trening = () => {
               </button>
             ))}
           </div>
-          <div className="trening__score">
-            <span className="trening__score-value">
+          <div className="quextractor__score">
+            <span className="quextractor__score-value">
               {Math.max(limit - remainingPairsCount, 0)}
             </span>{" "}
             done,{" "}
-            <span className="trening__score-value">{remainingPairsCount}</span>{" "}
+            <span className="quextractor__score-value">
+              {remainingPairsCount}
+            </span>{" "}
             more
             <br />
             <button
-              className="trening__page trening__page--next"
+              className="quextractor__page quextractor__page--next"
               onClick={() => goToPage(page, -1)}
               disabled={page <= 1}
             >
               &#5176;
             </button>{" "}
-            page <span className="trening__score-value">{page}</span> of{" "}
-            <span className="trening__score-value">{pagesCount}</span>{" "}
+            page <span className="quextractor__score-value">{page}</span> of{" "}
+            <span className="quextractor__score-value">{pagesCount}</span>{" "}
             <button
-              className="trening__page trening__page--next"
+              className="quextractor__page quextractor__page--next"
               onClick={() => goToPage(page, 1)}
               disabled={page >= pagesCount}
             >
@@ -148,9 +150,9 @@ const Trening = () => {
             </button>
           </div>
         </header>
-        <main className="trening__main">
+        <main className="quextractor__main">
           {remainingPairsCount === 0 && dragSource > -1 ? (
-            <div className="trening__loader">
+            <div className="quextractor__loader">
               <img src={bravo} alt="Bravo!" />
             </div>
           ) : content && content.length ? (
@@ -175,14 +177,14 @@ const Trening = () => {
               )
             )
           ) : (
-            <div className="trening__loader">Just a moment</div>
+            <div className="quextractor__loader">Just a moment</div>
           )}
 
-          <section className="trening__info">
+          <section className="quextractor__info">
             <p>
               This auto-generated quiz has been extracted from{" "}
               <a
-                className="trening__source-url trening__link"
+                className="quextractor__source-url quextractor__link"
                 href={sourceUrl}
                 target="_blank"
                 rel="noopener noreferrer"
@@ -194,7 +196,7 @@ const Trening = () => {
             <p>
               Try extracting from{" "}
               <span
-                className="trening__focus trening__link"
+                className="quextractor__focus quextractor__link"
                 onClick={() => searchElementRef.current.focus()}
               >
                 different URL
@@ -207,7 +209,7 @@ const Trening = () => {
               {suggestions.map((item, index) => (
                 <button
                   key={index}
-                  className="trening__suggestion trening__link"
+                  className="quextractor__suggestion quextractor__link"
                   onClick={() => fetchContent(item)}
                 >
                   {index + 1}
@@ -221,4 +223,4 @@ const Trening = () => {
   );
 };
 
-export default Trening;
+export default Quextractor;

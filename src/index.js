@@ -1,11 +1,11 @@
 import React from "react";
 import ReactDOM from "react-dom";
-import Trening from "./Trening";
+import Quextractor from "./Quextractor";
 import * as serviceWorker from "./serviceWorker";
 
 ReactDOM.render(
   <React.StrictMode>
-    <Trening />
+    <Quextractor />
   </React.StrictMode>,
   document.getElementById("root")
 );
