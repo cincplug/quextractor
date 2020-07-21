@@ -5,9 +5,11 @@ const parseHtml = (str) => {
   return {
     title: doc.title,
     pairs: Object.values(doc.querySelectorAll("tr")).map((row, rowIndex) =>
-      Object.values(row.querySelectorAll("td")).map((cell, cellIndex) => {
-        return { content: cell.textContent || "", rowIndex, cellIndex };
-      })
+      Object.values(row.querySelectorAll("td"))
+        .slice(0, 2)
+        .map((cell, cellIndex) => {
+          return { content: cell.textContent || "", rowIndex, cellIndex };
+        })
     ),
   };
 };
