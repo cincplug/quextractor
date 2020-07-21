@@ -1,0 +1,245 @@
+$gutter: 12px;
+$bp-s: 520px;
+$bp-m: 768px;
+$bp-l: 1024px;
+$bp-xl: 1200px;
+$bp-xxl: 1400px;
+
+$color-body: #39393a;
+$color-main: #24282a;
+$color-grey: #919191;
+$color-white: #f8f8f8;
+$color-item: $color-white;
+$color-search: #64676833;
+$color-drop: $color-main;
+
+$default-duration: 0.2s;
+$default-easing: ease-in;
+
+$search-icon-size: 20px;
+
+@mixin default-transition($property: transform) {
+  transition: $property $default-duration $default-easing;
+}
+@mixin border-radius-small {
+  border-radius: 4px;
+}
+
+@font-face {
+  font-family: "Brando Sans";
+  src: local("Brando Sans Light"), local("BrandoSans-Light"),
+    url("/static/fonts/subset-BrandoSans-Light.woff2") format("woff2");
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Brando Sans";
+  src: local("Brando Sans SemiBold"), local("BrandoSans-SemiBold"),
+    url("/static/fonts/subset-BrandoSans-SemiBold.woff2") format("woff2");
+  font-weight: bold;
+  font-style: normal;
+  font-display: swap;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  font-family: "Brando Sans";
+  box-sizing: border-box;
+}
+html {
+  font-size: 16px;
+  @media (min-width: $bp-m) {
+    font-size: 18px;
+  }
+  @media (min-width: $bp-xxl) {
+    font-size: 20px;
+  }
+}
+body {
+  background: $color-body;
+  color: $color-grey;
+}
+button,
+input {
+  background: none;
+  appearance: none;
+  border: none;
+  outline: none;
+}
+.quextractor {
+  &__loader {
+    grid-column: 1/-1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 30vh;
+  }
+  &__header {
+    background: $color-main;
+    color: $color-white;
+    padding: $gutter;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    @media (min-width: $bp-l) {
+      grid-template-columns: repeat(4, 1fr);
+    }
+  }
+  &__title {
+    font-size: 1rem;
+    color: $color-grey;
+    font-weight: normal;
+    display: flex;
+    align-items: center;
+  }
+  &__logo {
+    width: 10rem;
+    margin-left: -9rem;
+    transition: transform $default-duration $default-easing;
+    &:hover {
+      transform: translateX(9rem);
+      background: $color-main;
+    }
+  }
+  &__title-text {
+    width: 100%;
+    margin-left: 1rem;
+  }
+  &__search-form {
+    display: flex;
+    justify-self: flex-end;
+    align-items: center;
+    @media (min-width: $bp-l) {
+      justify-self: center;
+    }
+  }
+  &__search-input {
+    padding: $gutter / 3 0;
+    background: $color-search;
+    border: none;
+    padding: 0 1rem 0 3rem;
+    margin-left: -1rem;
+    @include border-radius-small;
+    color: $color-white;
+    font-size: 1rem;
+    height: 2rem;
+    width: 12rem;
+    @media (min-width: $bp-m) {
+      width: 20rem;
+    }
+    &:focus {
+      border: 1px solid $color-white;
+    }
+  }
+  &__search-submit {
+    display: flex;
+    align-items: center;
+    transform: translateX($gutter);
+  }
+  &__search-icon {
+    width: $search-icon-size;
+    height: $search-icon-size;
+    fill: $color-grey;
+  }
+  &__limit {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    @media (min-width: $bp-l) {
+      justify-content: center;
+    }
+  }
+  &__limit-choice {
+    height: 2rem;
+    background: $color-search;
+    padding: 3px 0.6rem;
+    @include border-radius-small;
+    margin-left: 0.2rem;
+    color: $color-white;
+    &--active {
+      background: $color-white;
+      color: $color-main;
+    }
+  }
+  &__main {
+    display: grid;
+    grid-gap: $gutter;
+    padding: $gutter;
+    grid-template-columns: repeat(1, 1fr);
+    @media (min-width: $bp-s) {
+      grid-template-columns: repeat(2, 1fr);
+    }
+    @media (min-width: $bp-m) {
+      grid-template-columns: repeat(3, 1fr);
+    }
+    @media (min-width: $bp-l) {
+      grid-template-columns: repeat(4, 1fr);
+    }
+    @media (min-width: $bp-l) {
+      grid-template-columns: repeat(5, 1fr);
+    }
+    @media (min-width: $bp-xxl) {
+      grid-template-columns: repeat(6, 1fr);
+    }
+  }
+  &__item {
+    background: $color-item;
+    padding: $gutter;
+    @include border-radius-small;
+    &--card {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      font-weight: bold;
+      color: $color-main;
+    }
+    &--box {
+      background: $color-drop;
+      color: $color-white;
+    }
+    &--dragging {
+      @include default-transition;
+      transform: scale(0);
+    }
+    &--hovered {
+      @include default-transition;
+      transform: scale(1.05);
+    }
+    &--will-leave {
+      @include default-transition;
+      transform: scale(0);
+    }
+  }
+  &__score {
+    text-align: right;
+    color: $color-grey;
+  }
+  &__score-value {
+    color: $color-white;
+  }
+  &__page {
+    color: $color-white;
+    &:disabled {
+      opacity: 0.3;
+    }
+  }
+  &__info {
+    grid-column: 1/-1;
+    margin-top: 4rem;
+  }
+  &__suggestion {
+    padding: 0 $gutter;
+    color: $color-white;
+  }
+  &__link {
+    color: $color-white;
+    text-decoration: none;
+    &:hover {
+      text-decoration: underline;
+      cursor: pointer;
+    }
+  }
+}
