@@ -1,5 +1,3 @@
-const { REACT_APP_PROXY_URL } = process.env;
-
 const parseHtml = (str) => {
   var parser = new DOMParser();
   var doc = parser.parseFromString(str, "text/html");
@@ -14,13 +12,12 @@ const parseHtml = (str) => {
 };
 const fetchSourceHtml = (url) => {
   return new Promise((resolve, reject) => {
-    fetch(REACT_APP_PROXY_URL, {
+    fetch(url, {
       method: "GET",
       mode: "cors",
       headers: {
         "Content-Type": "application/json",
         Authorization: "Basic",
-        "Target-URL": url,
       },
       body: null,
     })
