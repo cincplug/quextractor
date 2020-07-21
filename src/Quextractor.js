@@ -32,6 +32,7 @@ const Quextractor = () => {
         const responseParsed = api.parseHtml(response);
         setRemainingPairsCount(limit);
         setSourceTitle(responseParsed.title);
+        setSourceUrl(url);
         const flatResponse = responseParsed.pairs.flat();
         setContent(flatResponse);
         setActiveGroup(shuffle(flatResponse.slice(0, limit * 2)));
