@@ -220,7 +220,10 @@ const Quextractor = () => {
             </p>
           </section>
           {isThinking && (
-            <div className="quextractor__loader">Just a moment</div>
+            <div className="quextractor__loader">
+              Een &nbsp; <span className="quextractor__loader__mom">MOM</span>
+              entje
+            </div>
           )}
         </main>
       </div>
