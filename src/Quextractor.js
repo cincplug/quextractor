@@ -23,11 +23,13 @@ const Quextractor = () => {
   const [sourceTitle, setSourceTitle] = useState("");
   const [page, setPage] = useState(1);
   const [limit, setLimit] = useState(10);
+  const [isThinking, setIsThinking] = useState(false);
 
   const searchElementRef = useRef(null);
 
   const fetchContent = useCallback(
     (url = targetUrl) => {
+      setIsThinking(true);
       api.fetchSourceHtml(url).then((response) => {
         const responseParsed = api.parseHtml(response);
         setRemainingPairsCount(limit);
@@ -36,6 +38,7 @@ const Quextractor = () => {
         const flatResponse = responseParsed.pairs.flat();
         setContent(flatResponse);
         setActiveGroup(shuffle(flatResponse.slice(0, limit * 2)));
+        setIsThinking(false);
       });
     },
     [limit]
@@ -156,7 +159,7 @@ const Quextractor = () => {
             <div className="quextractor__loader">
               <img src={bravo} alt="Bravo!" />
             </div>
-          ) : content && content.length ? (
+          ) : (
             activeGroup.map((item, index) =>
               item.cellIndex === 0 ? (
                 <Card
@@ -177,8 +180,6 @@ const Quextractor = () => {
                 />
               )
             )
-          ) : (
-            <div className="quextractor__loader">Just a moment</div>
           )}
 
           <section className="quextractor__info">
@@ -218,6 +219,9 @@ const Quextractor = () => {
               ))}
             </p>
           </section>
+          {isThinking && (
+            <div className="quextractor__loader">Just a moment</div>
+          )}
         </main>
       </div>
     </DndProvider>

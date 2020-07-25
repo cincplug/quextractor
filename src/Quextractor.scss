@@ -1,4 +1,6 @@
 $gutter: 12px;
+$spacing: $gutter * 5;
+
 $bp-s: 520px;
 $bp-m: 768px;
 $bp-l: 1024px;
@@ -12,6 +14,7 @@ $color-white: #f8f8f8;
 $color-item: $color-white;
 $color-search: #64676833;
 $color-drop: $color-main;
+$color-overlay: rgba($color-main, 0.8);
 
 $default-duration: 0.2s;
 $default-easing: ease-in;
@@ -41,6 +44,15 @@ $search-icon-size: 20px;
   font-weight: bold;
   font-style: normal;
   font-display: swap;
+}
+
+@keyframes loader {
+  from {
+    transform: scale(1.1);
+  }
+  to {
+    transform: scale(1);
+  }
 }
 
 * {
@@ -75,7 +87,15 @@ input {
     display: flex;
     justify-content: center;
     align-items: center;
-    margin-top: 30vh;
+    position: absolute;
+    top: 0;
+    left: 0;
+    background: $color-overlay;
+    color: $color-white;
+    width: 100%;
+    height: 100%;
+    font-size: 5rem;
+    animation: loader $default-duration * 3 $default-easing infinite alternate;
   }
   &__header {
     background: $color-main;
@@ -228,7 +248,7 @@ input {
   }
   &__info {
     grid-column: 1/-1;
-    margin-top: 4rem;
+    margin-top: $spacing;
   }
   &__suggestion {
     padding: 0 $gutter;
