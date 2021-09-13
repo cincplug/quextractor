@@ -1,3 +1,11 @@
+# an experimental quizifier
+
+The idea behind this pet-project is to grab content from educational and documentationn pages and "quizify" it, make it a drag-and-drop based quiz. 
+
+Below is the generic CRA description
+
+----
+
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Available Scripts
